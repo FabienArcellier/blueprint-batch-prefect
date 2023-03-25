@@ -1,0 +1,46 @@
+version: "3.9"
+services:
+  server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: ["prefect", "server", "start"]
+    environment:
+      PREFECT_SERVER_API_HOST: 0.0.0.0
+      PREFECT_UI_URL: http://localhost:4200/api
+    ports:
+      - 4200:4200
+    init: true
+
+  agent:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    deploy:
+      mode: replicated
+      replicas: 1
+    command: ["prefect", "agent", "start", '-q', 'default']
+    environment:
+      PREFECT_API_URL: http://server:4200/api
+    volumes:
+      - ./src:/app/src
+    init: true
+    depends_on:
+      - server
+
+  # this container saves the flows from the code at startup.
+  # it uses a self-recording technique.
+  deploy:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: ["python", "-m", "app.deploy"]
+    environment:
+      PREFECT_API_URL: http://server:4200/api
+    volumes:
+      - ./src:/app/src
+      - ./deploy.py:/app/deploy.py
+    init: true
+    depends_on:
+      - server
+
