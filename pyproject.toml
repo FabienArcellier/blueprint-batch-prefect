@@ -17,11 +17,12 @@ classifiers = [
 [tool.poetry.dependencies]
 python = "^3.8"
 prefect = "^2.8.7"
-ipython = "^8.11.0"
+prefect-streamline = "^1.0.0"
 
 
 [tool.poetry.group.dev.dependencies]
 alfred-cli = "^1.2.0"
+ipython = "^8.11.0"
 mypy = "^0.991"
 pytest = "^7.2.0"
 

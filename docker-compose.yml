@@ -11,6 +11,11 @@ services:
     ports:
       - 4200:4200
     init: true
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:4200/api" ]
+      interval: 30s
+      timeout: 10s
+      retries: 5
 
   agent:
     build:
@@ -34,12 +39,11 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    command: ["python", "-m", "app.deploy"]
+    command: ["prefect-streamline", "deploy", "--module", "app.main"]
     environment:
       PREFECT_API_URL: http://server:4200/api
     volumes:
       - ./src:/app/src
-      - ./deploy.py:/app/deploy.py
     init: true
     depends_on:
       - server

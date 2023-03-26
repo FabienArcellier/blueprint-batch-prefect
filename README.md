@@ -1,4 +1,4 @@
-## blueprint-etl-prefect
+## blueprint-batch-prefect
 
 [![ci](https://github.com/FabienArcellier/blueprint-batch-prefect/actions/workflows/main.yml/badge.svg)](https://github.com/FabienArcellier/blueprint-batch-prefect/actions/workflows/main.yml)
 
@@ -12,26 +12,16 @@ This blueprint can serve as a basis for
 * an ETL system for transforming data into a datalake
 * a regular batch system that calls on external systems
 
-### Deployment
+## Usage
 
 Le déploiement de ce blueprint se fait avec ``docker-compose`` sur une seule machine. 
 
+```bash
+docker-compose up
+```
+
 Prefect supporte un déploiement en cluster. Ce blueprint ne l'implémente pas, vous pouvez le forker
 et le faire évoluer pour le supporter.
-
-### Testing 
-
-Prefect ajoute un overhead d'une seconde sur l'exécution d'une fonction python. Ce projet
-fournit une primitive pour bypasser cet overhead.
-
-```python
-def test_main_my_favorite_function_should_return_43():
-    # Acts
-    result = flow_test.fn(main.my_favorite_function)(12)
-    
-    # Assert
-    assert result == 43
-```
 
 ### Interactive shell
 
@@ -53,30 +43,12 @@ fn(main.my_favorite_function)(12)
 
 2. remove .git directory
 
-## The latest version
+## Latest version
 
 You can find the latest version to ...
 
 ```bash
-git clone https://github.com/FabienArcellier/blueprint-python3.git
-```
-
-## Usage
-
-You can run the application with the following command
-
-```bash
-python src/app/main.py
-```
-
-### Run in docker container
-
-Vous pouvez exécuter ce template avec docker. L'image fabriquée peut être distribuée et utiliser pour déployer votre application
-sur un environnement de production. 
-
-```bash
-docker-compose build
-docker-compose run app
+git clone https://github.com/FabienArcellier/blueprint-batch-prefect.git
 ```
 
 ## Developper guideline

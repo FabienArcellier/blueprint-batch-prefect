@@ -1,15 +1,13 @@
 import logging
 
 from prefect import flow, get_run_logger
+from prefect_streamline import deploybook # type: ignore[import]
 
 
-@flow(name="main.my_favorite_function")
-def my_favorite_function() -> int:
+@deploybook.register(interval=30)
+@flow(name="main.myflow")
+def myflow() -> int:
     logger = get_run_logger()
     logger.info("execution done")
     return 43
 
-
-@flow(name="main.my_favorite_function_2")
-def my_favorite_function_2() -> int:
-    return 45
